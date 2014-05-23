@@ -375,7 +375,7 @@ class FFMpeg(object):
             A video stream, defaults to True
         """
 
-        if not os.path.exists(fname):
+        if not os.path.exists(fname) and not fname.startswith("http"):
             return None
 
         info = MediaInfo(posters_as_video)
@@ -412,7 +412,7 @@ class FFMpeg(object):
         ...    pass # can be used to inform the user about conversion progress
 
         """
-        if not os.path.exists(infile):
+        if not os.path.exists(infile) and not infile.startswith("http"):
             raise FFMpegError("Input file doesn't exist: " + infile)
 
         cmds = [self.ffmpeg_path, '-i', infile]
