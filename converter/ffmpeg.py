@@ -415,7 +415,12 @@ class FFMpeg(object):
         if not os.path.exists(infile) and not infile.startswith("http"):
             raise FFMpegError("Input file doesn't exist: " + infile)
 
-        cmds = [self.ffmpeg_path, '-i', infile]
+        if "-ss" in opts:
+            ssi = opts.index("-ss")
+            cmds = [self.ffmpeg_path, opts.pop(ssi), opts.pop(ssi), '-i', infile]
+        else:
+            cmds = [self.ffmpeg_path, '-i', infile]
+        
         cmds.extend(opts)
         cmds.extend(['-y', outfile])
 
